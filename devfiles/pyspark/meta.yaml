@@ -1,0 +1,7 @@
+---
+displayName: Pyspark
+description: Pyspark Stack with Python 3.8 and Spark 3.0.1
+tags: ["Centos", "Python", "pip", "Spark", "Pyspark"]
+icon: /images/python.svg
+globalMemoryLimit: 1686Mi
+
