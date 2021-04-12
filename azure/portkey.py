@@ -40,7 +40,6 @@ def main() -> None:
                 continue
     quayImages = { 'registry': 'quay.io'}
     quayImages['repositories'] = [img for img in images if img['registry'] == 'quay.io']
-    crImages = [img for img in images if img['registry'] == 'cranalyticalplatform.azurecr.io']
     
     with open(args.portKeyOuputFile, 'w') as portKeyOutput:
         portKeyOutput.write(template.render(quayImages))
