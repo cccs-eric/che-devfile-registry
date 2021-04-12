@@ -1,0 +1,35 @@
+trigger:
+  - cccs-master
+
+variables:
+  imageRepository: 'cccs/che-devfile-registry'
+  buildTimestamp: $[format('{0:yyyyMMddHHmmss}', pipeline.startTime)]
+  version: 7.28.1
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Docker@2
+  displayName: Login to uChimera
+  inputs:
+    containerRegistry: 'uchimera'
+    command: 'login'
+- task: Docker@2
+  displayName: Build offline image
+  inputs:
+    command: build
+    buildContext: $(Build.Repository.LocalPath)
+    repository: $(imageRepository)
+    dockerfile: $(Build.SourcesDirectory)/build/dockerfiles/Dockerfile
+    arguments: --build-arg PATCHED_IMAGES_TAG=$(version) --build-arg USE_DIGESTS=false --target offline-registry
+    tags: |
+      $(version)
+- task: Docker@2
+  displayName: Push image to uChimera container registry
+  inputs:
+    containerRegistry: 'uchimera'
+    command: push
+    repository: $(imageRepository)
+    tags: |
+      $(version)
