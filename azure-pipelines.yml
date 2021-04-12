@@ -35,5 +35,5 @@ steps:
       $(version)
 - script: |
     set -vx
-    docker cp $(docker create --rm uchimera.azurecr.io/$(imageRepository):$(version):7.28.1):/usr/local/apache2/htdocs/devfiles/external_images.txt ./test
+    docker cp $(docker create --rm uchimera.azurecr.io/$(imageRepository):$(version)):/usr/local/apache2/htdocs/devfiles/external_images.txt ./test
     cat ./test
