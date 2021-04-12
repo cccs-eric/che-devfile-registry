@@ -6,7 +6,7 @@ variables:
   buildTimestamp: $[format('{0:yyyyMMddHHmmss}', pipeline.startTime)]
   version: 7.28.1
   externalImages: './external_images.txt'
-  portKeyConfiguration: './devfile_registry_portkey.json'
+  portKeyConfiguration: '$(Build.ArtifactStagingDirectory)/devfile_registry_portkey.json'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -46,6 +46,6 @@ steps:
   displayName: "Create a PortKey configuration file"
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(portKeyConfiguration)'
-    ArtifactName: '$(portKeyConfiguration)'
+    PathtoPublish: '$(portKeyConfiguration)'
+    ArtifactName: 'portKeyConfiguration.json'
     publishLocation: 'Container'
