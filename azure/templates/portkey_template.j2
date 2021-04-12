@@ -1,0 +1,21 @@
+{
+    "registries": [
+        {
+            "registryLoginUrl": "{{ registry }}",
+            "registryPublic": true,
+            "repositories": [
+                {%- for repo in repositories %}
+                {
+                    "namespace": "{{ repo.namespace }}",
+                    "repositoryName": "{{ repo.repositoryName }}",
+                    "tags": [
+                        {
+                            "tagName": "{{ repo.tagName }}"
+                        }
+                    ]
+                }{{ "," if not loop.last else "" }}
+                {%- endfor %}
+            ]
+        }
+    ]
+}

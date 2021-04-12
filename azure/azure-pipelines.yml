@@ -5,6 +5,7 @@ variables:
   imageRepository: 'cccs/che-devfile-registry'
   buildTimestamp: $[format('{0:yyyyMMddHHmmss}', pipeline.startTime)]
   version: 7.28.1
+  externalImages: './external_images.txt'
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -34,6 +35,6 @@ steps:
     tags: |
       $(version)
 - script: |
-    set -vx
-    docker cp $(docker create --rm uchimera.azurecr.io/$(imageRepository):$(version)):/usr/local/apache2/htdocs/devfiles/external_images.txt ./test
-    cat ./test
+    docker cp $(docker create --rm uchimera.azurecr.io/$(imageRepository):$(version)):/usr/local/apache2/htdocs/devfiles/external_images.txt $(externalImages)
+    cat $(externalImages)
+  displayName: "Extract external_images.txt from registry image"
