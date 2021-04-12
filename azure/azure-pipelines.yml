@@ -36,5 +36,10 @@ steps:
       $(version)
 - script: |
     docker cp $(docker create --rm uchimera.azurecr.io/$(imageRepository):$(version)):/usr/local/apache2/htdocs/devfiles/external_images.txt $(externalImages)
-    cat $(externalImages)
   displayName: "Extract external_images.txt from registry image"
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'filePath'
+    scriptPath: 'azure/portkey.py'
+    arguments: '$(externalImages)'
+  displayName: "Create a PortKey configuration file"
