@@ -44,3 +44,8 @@ steps:
     scriptPath: 'azure/portkey.py'
     arguments: '$(externalImages) $(portKeyConfiguration)'
   displayName: "Create a PortKey configuration file"
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(portKeyConfiguration)'
+    ArtifactName: '$(portKeyConfiguration)'
+    publishLocation: 'Container'
