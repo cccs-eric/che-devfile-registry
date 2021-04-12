@@ -38,3 +38,12 @@ steps:
     repository: $(imageRepository)
     tags: |
       $(version)
+- script: |
+    echo "I can run inside the container (it starts by default)"
+    cat /usr/local/apache2/htdocs/devfiles/external_images.txt
+  target:
+    container: registry
+- task: Docker@2
+  inputs:
+    command: stop
+    container: registry      
